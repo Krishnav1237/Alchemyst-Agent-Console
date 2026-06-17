@@ -93,3 +93,16 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 2. **Operations Trace Timeline**: Batches consecutive tokens into single batch entries to reduce rendering overhead. Implements a windowing viewport limited to the latest 100 entries to prevent DOM bloating, supporting bidirectional scroll highlights using `data-call-id` linking.
 3. **Context Inspector**: Features a deep-diff engine highlighting added (green), removed (red), and updated (yellow) keys. Incorporates **lazy node expansion** (rendering nested nodes only on expand click) to process 500KB+ JSON state snapshots at 60fps. Includes a version history scrubber.
 4. **Reconnection Toast**: Appears bottom-left within 200ms of link loss. Disables chat inputs during `RESUMING` to prevent transaction races, keeping dialogue panels and context inspectors fully interactive.
+
+---
+
+## Screenshots of the Console
+
+### (a) Streamed Response with a Tool Call
+![Streamed Response with a Tool Call](screenshots/01_chat_tool_call.png)
+
+### (b) Trace Operations Timeline
+![Trace Operations Timeline](screenshots/03_timeline_and_console.png)
+
+### (c) Context Inspector showing a JSON Diff
+![Context Inspector showing a JSON Diff](screenshots/02_context_diff.png)
