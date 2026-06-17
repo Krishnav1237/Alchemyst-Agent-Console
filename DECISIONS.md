@@ -40,6 +40,7 @@ Tracking state recovery requires separating what the *network socket* has receiv
 * **Turn Reset Protections**: `sendUserMessage()` clears the gap timeout timer to ensure any unresolved sequence gaps from a prior turn do not leak into the new context and force spurious reconnects.
 * **Input Lock**: The input bar is disabled during `RESUMING` to prevent users from sending new commands while replayed logs are processing, preventing transaction races.
 * **Dev Overlay Suppression**: Standard Next.js development configurations intercept `console.error` and render a full-screen block overlay. In chaos mode, transport-level connection drops, JSON parse failures from malformed packets, and sequence gaps are expected, self-healing events. To prevent UI lockouts during testing, these expected transport states are routed to `console.warn` instead of `console.error`, ensuring the developer logs are fully visible in the console without interrupting execution.
+* **Leaked Connection Prevention (cleanupSocket)**: When a connection drops, a manual reset occurs, or a sequence gap timeout triggers, we explicitly detach the socket's event listeners (`onopen`, `onmessage`, `onclose`, `onerror`) before closing the old instance. This prevents stale event listeners on dangling legacy connections from firing and causing duplicate/unstable reconnection loops or corrupting sequence state variables.
 
 ---
 
