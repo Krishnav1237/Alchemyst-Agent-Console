@@ -106,6 +106,7 @@ export interface AgentContextProps {
   sendMessage: (content: string) => void;
   setSelectedIndex: (contextId: string, index: number) => void;
   resetSession: () => void;
+  simulateDrop: () => void;
 }
 
 const AgentContext = createContext<AgentContextProps | undefined>(undefined);
@@ -403,6 +404,12 @@ export const AgentProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   };
 
+  const simulateDrop = () => {
+    if (controllerRef.current) {
+      controllerRef.current.simulateDrop();
+    }
+  };
+
   return (
     <AgentContext.Provider
       value={{
@@ -415,6 +422,7 @@ export const AgentProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         sendMessage,
         setSelectedIndex,
         resetSession,
+        simulateDrop,
       }}
     >
       {children}

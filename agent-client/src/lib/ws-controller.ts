@@ -121,6 +121,13 @@ export class AgentWebSocketController {
     this.setConnectionState("DISCONNECTED");
   }
 
+  public simulateDrop(): void {
+    if (this.ws) {
+      console.log("[ws-controller] Simulating spontaneous connection drop");
+      this.handleClose();
+    }
+  }
+
   public sendUserMessage(content: string): void {
     if (this.connectionState !== "CONNECTED" || !this.ws || this.ws.readyState !== WebSocket.OPEN) {
       if (this.connectionState === "CONNECTED") {

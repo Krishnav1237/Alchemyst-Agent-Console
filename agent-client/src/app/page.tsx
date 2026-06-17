@@ -7,7 +7,7 @@ import { TracePanel } from "../components/TracePanel";
 import { ContextInspector } from "../components/ContextInspector";
 
 export default function Home() {
-  const { connectionState, resetSession } = useAgent();
+  const { connectionState, resetSession, simulateDrop } = useAgent();
 
   const getConnectionStateLabel = () => {
     switch (connectionState) {
@@ -59,6 +59,9 @@ export default function Home() {
             </span>
           </div>
 
+          <button onClick={simulateDrop} className="btn btn-warning" style={{ marginRight: "8px" }} disabled={connectionState !== "CONNECTED"}>
+            Simulate Drop
+          </button>
           <button onClick={resetSession} className="btn btn-danger">
             Force Link Reset
           </button>
