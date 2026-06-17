@@ -39,6 +39,7 @@ Tracking state recovery requires separating what the *network socket* has receiv
 * **Disposable Buffer**: Upon starting a new connection attempt or establishing a socket handshake, we call `reorderBuffer.clear()` to ensure stale, pre-disconnect out-of-order events from a failed link do not persist or corrupt the sequence state. When we send `RESUME { last_seq: processedSeq }` upon reconnect, the server is guaranteed to replay all events where `seq > processedSeq` in correct chronological order. Storing pre-disconnect out-of-order events is redundant and could cause key collisions.
 * **Turn Reset Protections**: `sendUserMessage()` clears the gap timeout timer to ensure any unresolved sequence gaps from a prior turn do not leak into the new context and force spurious reconnects.
 * **Input Lock**: The input bar is disabled during `RESUMING` to prevent users from sending new commands while replayed logs are processing, preventing transaction races.
+* **Dev Overlay Suppression**: Standard Next.js development configurations intercept `console.error` and render a full-screen block overlay. In chaos mode, transport-level connection drops, JSON parse failures from malformed packets, and sequence gaps are expected, self-healing events. To prevent UI lockouts during testing, these expected transport states are routed to `console.warn` instead of `console.error`, ensuring the developer logs are fully visible in the console without interrupting execution.
 
 ---
 
