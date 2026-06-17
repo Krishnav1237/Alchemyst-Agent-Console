@@ -93,7 +93,7 @@ export class AgentWebSocketController {
       this.ws.onclose = () => this.handleClose();
       this.ws.onerror = (err) => this.handleError(err);
     } catch (error) {
-      console.error("[ws-controller] Connection error:", error);
+      console.warn("[ws-controller] Connection error:", error);
       this.scheduleReconnect();
     }
   }
@@ -175,7 +175,7 @@ export class AgentWebSocketController {
       }
       rawMsg = parsed;
     } catch (err) {
-      console.error("[ws-controller] JSON parse error:", err, event.data);
+      console.warn("[ws-controller] JSON parse error:", err, event.data);
       return;
     }
 
@@ -207,7 +207,7 @@ export class AgentWebSocketController {
       // Re-initialize a gap timeout timer for the remaining gap.
       if (this.reorderBuffer.size > 0 && !this.gapTimeoutTimer) {
         this.gapTimeoutTimer = setTimeout(() => {
-          console.error(
+          console.warn(
             `[ws-controller] Sequence gap unresolved after ${GAP_TIMEOUT_MS}ms. ` +
             "Forcing reconnect to recover via RESUME."
           );
@@ -225,7 +225,7 @@ export class AgentWebSocketController {
       // Trigger a reconnect rather than growing memory indefinitely.
       this.reorderBuffer.set(rawMsg.seq, rawMsg);
       if (this.reorderBuffer.size > MAX_REORDER_BUFFER_SIZE) {
-        console.error(
+        console.warn(
           `[ws-controller] Reorder buffer cap (${MAX_REORDER_BUFFER_SIZE}) exceeded. ` +
           "Permanent gap assumed — forcing reconnect."
         );
@@ -239,7 +239,7 @@ export class AgentWebSocketController {
       // If the gap has not closed after GAP_TIMEOUT_MS, assume permanent loss.
       if (!this.gapTimeoutTimer) {
         this.gapTimeoutTimer = setTimeout(() => {
-          console.error(
+          console.warn(
             `[ws-controller] Sequence gap unresolved after ${GAP_TIMEOUT_MS}ms. ` +
             "Forcing reconnect to recover via RESUME."
           );
@@ -314,7 +314,7 @@ export class AgentWebSocketController {
         break;
         
       case "ERROR":
-        console.error(`[ws-controller] Server error: code=${msg.code}, msg=${msg.message}`);
+        console.warn(`[ws-controller] Server error: code=${msg.code}, msg=${msg.message}`);
         // Reset stream state so the UI is not left in a permanently frozen
         // "streaming" or "paused_for_tool" state after a server-side error.
         // The user can send a new message once the error is displayed.
@@ -380,7 +380,7 @@ export class AgentWebSocketController {
   }
 
   private handleError(err: Event): void {
-    console.error("[ws-controller] Socket error:", err);
+    console.warn("[ws-controller] Socket error:", err);
     // on error, socket close will follow, which triggers reconnection
   }
 
