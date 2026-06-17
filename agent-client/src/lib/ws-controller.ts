@@ -85,7 +85,7 @@ export class AgentWebSocketController {
       this.ws.onerror = null;
       try {
         this.ws.close();
-      } catch (e) {
+      } catch {
         // Ignore errors during close
       }
       this.ws = null;

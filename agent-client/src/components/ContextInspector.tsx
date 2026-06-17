@@ -39,7 +39,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, defaultExpanded = false }) =>
 
   const renderValue = (val: unknown) => {
     if (val === null) return <span className="tree-value null">null</span>;
-    if (typeof val === "string") return <span className="tree-value string">"{val}"</span>;
+    if (typeof val === "string") return <span className="tree-value string">&quot;{val}&quot;</span>;
     if (typeof val === "number") return <span className="tree-value number">{val}</span>;
     if (typeof val === "boolean") return <span className="tree-value boolean">{val.toString()}</span>;
     return <span className="tree-value">{JSON.stringify(val)}</span>;

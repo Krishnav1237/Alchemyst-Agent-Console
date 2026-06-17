@@ -101,8 +101,8 @@ export const TracePanel: React.FC = () => {
               <span className="trace-time">+{Math.round(item.durationMs)}ms</span>
             </div>
             <div className="trace-summary">
-              Streamed {item.count} tokens: "{item.text.slice(0, 80)}
-              {item.text.length > 80 ? "..." : ""}"
+              Streamed {item.count} tokens: &quot;{item.text.slice(0, 80)}
+              {item.text.length > 80 ? "..." : ""}&quot;
             </div>
           </>
         );
@@ -147,7 +147,7 @@ export const TracePanel: React.FC = () => {
               <span className="trace-time">seq: {item.seq}</span>
             </div>
             <div className="trace-summary">
-              Challenge: "{item.challenge || "<EMPTY>"}"
+              Challenge: &quot;{item.challenge || "<EMPTY>"}&quot;
             </div>
           </>
         );
@@ -159,7 +159,7 @@ export const TracePanel: React.FC = () => {
               <span className="trace-type-badge badge-pong">Heartbeat Pong</span>
             </div>
             <div className="trace-summary">
-              Echoed challenge: "{item.echo || "<EMPTY>"}"
+              Echoed challenge: &quot;{item.echo || "<EMPTY>"}&quot;
             </div>
           </>
         );
@@ -172,7 +172,7 @@ export const TracePanel: React.FC = () => {
               <span className="trace-time">seq: {item.seq}</span>
             </div>
             <div className="trace-summary">
-              Updated snapshot context: "{item.contextId}"
+              Updated snapshot context: &quot;{item.contextId}&quot;
             </div>
           </>
         );
@@ -184,7 +184,7 @@ export const TracePanel: React.FC = () => {
               <span className="trace-type-badge badge-stream_end">Stream End</span>
             </div>
             <div className="trace-summary">
-              Completed response stream: "{item.streamId}"
+              Completed response stream: &quot;{item.streamId}&quot;
             </div>
           </>
         );

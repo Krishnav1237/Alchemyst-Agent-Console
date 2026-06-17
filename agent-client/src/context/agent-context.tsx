@@ -327,9 +327,6 @@ export const AgentProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
         // Update selected indices
         setSelectedIndexState((prevIdxs) => {
-          const currentIdx = prevIdxs[contextId] ?? 0;
-          // Shift index if we evicted snapshots, or lock to the latest
-          const newIdx = Math.max(0, Math.min(finalHistory.length - 1, currentIdx - evictedCount));
           return {
             ...prevIdxs,
             [contextId]: finalHistory.length - 1, // Focus on newest snapshot automatically
