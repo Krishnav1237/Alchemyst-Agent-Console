@@ -109,7 +109,10 @@ export class AgentWebSocketController {
   }
 
   public sendUserMessage(content: string): void {
-    if (this.connectionState !== "CONNECTED") {
+    if (this.connectionState !== "CONNECTED" || !this.ws || this.ws.readyState !== WebSocket.OPEN) {
+      if (this.connectionState === "CONNECTED") {
+        this.handleClose();
+      }
       throw new Error("Cannot send message: WebSocket is not connected.");
     }
 
