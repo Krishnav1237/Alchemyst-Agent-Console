@@ -1,0 +1,19 @@
+# Ignore dependency folders
+node_modules/
+**/node_modules/
+
+# Ignore Next.js build output
+.next/
+**/.next/
+
+# Ignore compiled server output
+dist/
+**/dist/
+
+# Ignore system files and logs
+.DS_Store
+*.log
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

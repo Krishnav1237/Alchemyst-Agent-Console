@@ -1,0 +1,12 @@
+{
+  "name": "ai-agent-console-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "postinstall": "npm install --prefix agent-client",
+    "build": "npm run build --prefix agent-client",
+    "start": "npm run start --prefix agent-client",
+    "dev": "npm run dev --prefix agent-client",
+    "test": "npm run test --prefix agent-client"
+  }
+}
