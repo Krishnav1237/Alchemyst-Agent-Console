@@ -77,11 +77,27 @@ export class AgentWebSocketController {
 
   // ── Connection Management ───────────────────────────────────
 
+  private cleanupSocket(): void {
+    if (this.ws) {
+      this.ws.onopen = null;
+      this.ws.onmessage = null;
+      this.ws.onclose = null;
+      this.ws.onerror = null;
+      try {
+        this.ws.close();
+      } catch (e) {
+        // Ignore errors during close
+      }
+      this.ws = null;
+    }
+  }
+
   public connect(): void {
     if (this.connectionState === "CONNECTED" || this.connectionState === "CONNECTING" || this.connectionState === "RESUMING") {
       return;
     }
 
+    this.cleanupSocket(); // Ensure any dangling socket is fully cleaned up
     this.isManualClose = false;
     this.setConnectionState(this.processedSeq > 0 ? "RECONNECTING" : "CONNECTING");
     this.reorderBuffer.clear(); // Ensure clean slate for sequence processing on new sockets
@@ -101,10 +117,7 @@ export class AgentWebSocketController {
   public disconnect(): void {
     this.isManualClose = true;
     this.clearReconnectTimer();
-    if (this.ws) {
-      this.ws.close();
-      this.ws = null;
-    }
+    this.cleanupSocket();
     this.setConnectionState("DISCONNECTED");
   }
 
@@ -366,7 +379,7 @@ export class AgentWebSocketController {
     }
     console.log("[ws-controller] Socket closed");
     this.clearGapTimeout();
-    this.ws = null;
+    this.cleanupSocket();
     if (!this.isManualClose) {
       this.setConnectionState("RECONNECTING");
       this.scheduleReconnect();
